@@ -1,0 +1,139 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    CapacityProvisioned: 0.25vCPU 0.5GB
+    Logging: 'LoggingDisabled: LOGGING_CONFIGMAP_NOT_FOUND'
+  creationTimestamp: "2025-01-11T17:19:56Z"
+  generateName: flux2-flux-check-
+  labels:
+    app.kubernetes.io/instance: flux-system
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: flux
+    app.kubernetes.io/version: 2.4.0
+    controller-uid: 8717d699-1110-40cc-be2a-9cb5841eda9b
+    eks.amazonaws.com/fargate-profile: flux-system
+    helm.sh/chart: flux2-2.14.1
+    job-name: flux2-flux-check
+  name: flux2-flux-check-dv7zs
+  namespace: flux-system
+  ownerReferences:
+  - apiVersion: batch/v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: Job
+    name: flux2-flux-check
+    uid: 8717d699-1110-40cc-be2a-9cb5841eda9b
+  resourceVersion: "5495"
+  uid: a73a953b-f693-489b-958d-68226d56832e
+spec:
+  automountServiceAccountToken: true
+  containers:
+  - command:
+    - /usr/local/bin/flux
+    - check
+    - --pre
+    - --namespace
+    - flux-system
+    image: ghcr.io/fluxcd/flux-cli:v2.4.0
+    imagePullPolicy: IfNotPresent
+    name: flux-cli
+    resources: {}
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
+      readOnlyRootFilesystem: true
+      runAsNonRoot: true
+      seccompProfile:
+        type: RuntimeDefault
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-nxjrp
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  nodeName: fargate-ip-10-35-2-42.ec2.internal
+  preemptionPolicy: PreemptLowerPriority
+  priority: 2000001000
+  priorityClassName: system-node-critical
+  restartPolicy: Never
+  schedulerName: fargate-scheduler
+  securityContext: {}
+  serviceAccount: flux2-flux-check
+  serviceAccountName: flux2-flux-check
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - name: kube-api-access-nxjrp
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2025-01-11T17:20:48Z"
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: "2025-01-11T17:20:48Z"
+    reason: PodFailed
+    status: "False"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: "2025-01-11T17:20:48Z"
+    reason: PodFailed
+    status: "False"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: "2025-01-11T17:20:47Z"
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - containerID: containerd://f94f84398adfeff70474b5741d338c256798d014c5a0a91508360df357c9654c
+    image: ghcr.io/fluxcd/flux-cli:v2.4.0
+    imageID: ghcr.io/fluxcd/flux-cli@sha256:a9cb966cddc1a0c56dc0d57dda485d9477dd397f8b45f222717b24663471fd1f
+    lastState: {}
+    name: flux-cli
+    ready: false
+    restartCount: 0
+    started: false
+    state:
+      terminated:
+        containerID: containerd://f94f84398adfeff70474b5741d338c256798d014c5a0a91508360df357c9654c
+        exitCode: 1
+        finishedAt: "2025-01-11T17:20:52Z"
+        reason: Error
+        startedAt: "2025-01-11T17:20:52Z"
+  hostIP: 10.35.2.42
+  phase: Failed
+  podIP: 10.35.2.42
+  podIPs:
+  - ip: 10.35.2.42
+  qosClass: BestEffort
+  startTime: "2025-01-11T17:20:48Z"

@@ -1,0 +1,72 @@
+Name:                 flux2-flux-check-dv7zs
+Namespace:            flux-system
+Priority:             2000001000
+Priority Class Name:  system-node-critical
+Service Account:      flux2-flux-check
+Node:                 fargate-ip-10-35-2-42.ec2.internal/10.35.2.42
+Start Time:           Sat, 11 Jan 2025 17:20:48 +0000
+Labels:               app.kubernetes.io/instance=flux-system
+                      app.kubernetes.io/managed-by=Helm
+                      app.kubernetes.io/part-of=flux
+                      app.kubernetes.io/version=2.4.0
+                      controller-uid=8717d699-1110-40cc-be2a-9cb5841eda9b
+                      eks.amazonaws.com/fargate-profile=flux-system
+                      helm.sh/chart=flux2-2.14.1
+                      job-name=flux2-flux-check
+Annotations:          CapacityProvisioned: 0.25vCPU 0.5GB
+                      Logging: LoggingDisabled: LOGGING_CONFIGMAP_NOT_FOUND
+Status:               Failed
+IP:                   10.35.2.42
+IPs:
+  IP:           10.35.2.42
+Controlled By:  Job/flux2-flux-check
+Containers:
+  flux-cli:
+    Container ID:    containerd://f94f84398adfeff70474b5741d338c256798d014c5a0a91508360df357c9654c
+    Image:           ghcr.io/fluxcd/flux-cli:v2.4.0
+    Image ID:        ghcr.io/fluxcd/flux-cli@sha256:a9cb966cddc1a0c56dc0d57dda485d9477dd397f8b45f222717b24663471fd1f
+    Port:            <none>
+    Host Port:       <none>
+    SeccompProfile:  RuntimeDefault
+    Command:
+      /usr/local/bin/flux
+      check
+      --pre
+      --namespace
+      flux-system
+    State:          Terminated
+      Reason:       Error
+      Exit Code:    1
+      Started:      Sat, 11 Jan 2025 17:20:52 +0000
+      Finished:     Sat, 11 Jan 2025 17:20:52 +0000
+    Ready:          False
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-nxjrp (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             False 
+  ContainersReady   False 
+  PodScheduled      True 
+Volumes:
+  kube-api-access-nxjrp:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type     Reason           Age   From               Message
+  ----     ------           ----  ----               -------
+  Warning  LoggingDisabled  46m   fargate-scheduler  Disabled logging because aws-logging configmap was not found. configmap "aws-logging" not found
+  Normal   Scheduled        46m   fargate-scheduler  Successfully assigned flux-system/flux2-flux-check-dv7zs to fargate-ip-10-35-2-42.ec2.internal
+  Normal   Pulling          46m   kubelet            Pulling image "ghcr.io/fluxcd/flux-cli:v2.4.0"
+  Normal   Pulled           46m   kubelet            Successfully pulled image "ghcr.io/fluxcd/flux-cli:v2.4.0" in 3.055415518s (3.055425809s including waiting)
+  Normal   Created          46m   kubelet            Created container flux-cli
+  Normal   Started          46m   kubelet            Started container flux-cli

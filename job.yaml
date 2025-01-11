@@ -1,0 +1,51 @@
+Name:             flux2-flux-check
+Namespace:        flux-system
+Selector:         controller-uid=8717d699-1110-40cc-be2a-9cb5841eda9b
+Labels:           app.kubernetes.io/instance=flux-system
+                  app.kubernetes.io/managed-by=Helm
+                  app.kubernetes.io/part-of=flux
+                  app.kubernetes.io/version=2.4.0
+                  helm.sh/chart=flux2-2.14.1
+Annotations:      batch.kubernetes.io/job-tracking: 
+                  helm.sh/hook: pre-install
+                  helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
+                  helm.sh/hook-weight: -5
+Parallelism:      1
+Completions:      1
+Completion Mode:  NonIndexed
+Suspend:          false
+Backoff Limit:    1
+Start Time:       Sat, 11 Jan 2025 17:19:56 +0000
+Pods Statuses:    0 Active (0 Ready) / 0 Succeeded / 2 Failed
+Pod Template:
+  Labels:           app.kubernetes.io/instance=flux-system
+                    app.kubernetes.io/managed-by=Helm
+                    app.kubernetes.io/part-of=flux
+                    app.kubernetes.io/version=2.4.0
+                    controller-uid=8717d699-1110-40cc-be2a-9cb5841eda9b
+                    helm.sh/chart=flux2-2.14.1
+                    job-name=flux2-flux-check
+  Service Account:  flux2-flux-check
+  Containers:
+   flux-cli:
+    Image:           ghcr.io/fluxcd/flux-cli:v2.4.0
+    Port:            <none>
+    Host Port:       <none>
+    SeccompProfile:  RuntimeDefault
+    Command:
+      /usr/local/bin/flux
+      check
+      --pre
+      --namespace
+      flux-system
+    Environment:   <none>
+    Mounts:        <none>
+  Volumes:         <none>
+  Node-Selectors:  <none>
+  Tolerations:     <none>
+Events:
+  Type     Reason                Age   From            Message
+  ----     ------                ----  ----            -------
+  Normal   SuccessfulCreate      40m   job-controller  Created pod: flux2-flux-check-dv7zs
+  Normal   SuccessfulCreate      39m   job-controller  Created pod: flux2-flux-check-jj4kq
+  Warning  BackoffLimitExceeded  38m   job-controller  Job has reached the specified backoff limit
